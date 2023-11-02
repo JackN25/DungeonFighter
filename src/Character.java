@@ -13,6 +13,14 @@ public class Character {
     private double energyMulti;
     private double energyRegen;
     private double energyRegenMulti;
+    private double critChance;
+    private double critBonus;
+    private double attack1cd = 1;
+    private double attack2cd = 2;
+    private double attack3cd = 5;
+    private double precision = 0;
+    private double characterLevel;
+
     private ArrayList<String> accessories = new ArrayList<String>();
     private ArrayList<String> skills = new ArrayList<String>();
 
@@ -21,6 +29,7 @@ public class Character {
     public Character(String type, String name) {
         this.name = name;
         this.type = type;
+        characterLevel = 0;
         if (type.equals("swordsman")) {
             attack = 11;
             attackMulti = 1.3;
@@ -32,6 +41,8 @@ public class Character {
             energyMulti= 1.2;
             energyRegen = 20;
             energyRegenMulti = 1.1;
+            critChance = 0.33;
+            critBonus = 1.5;
             skills.add("Slice");
             skills.add("Cleave");
             skills.add("Block");
@@ -49,8 +60,10 @@ public class Character {
             energyMulti = 1.3;
             energyRegen = 30;
             energyRegenMulti = 1.3;
+            critChance = 0.33;
+            critBonus = 1.5;
+            skills.add("Magic Blast");
             skills.add("Fireball");
-            skills.add("Snowball");
             skills.add("Shield");
             skills.add("Heal");
             skills.add("Empower");
@@ -66,6 +79,8 @@ public class Character {
             energyMulti = 1.2;
             energyRegen = 20;
             energyRegenMulti = 1.1;
+            critChance = 0.15;
+            critBonus = 1.75;
             skills.add("Smack");
             skills.add("Slam");
             skills.add("Bandage");
@@ -83,11 +98,13 @@ public class Character {
             energyMulti = 1.2;
             energyRegen = 20;
             energyRegenMulti = 1.1;
+            critChance = 0.45;
+            critBonus = 1.33;
             skills.add("Shoot");
             skills.add("Stab");
             skills.add("Retreat");
             skills.add("Bandage");
-            skills.add("Precision");
+            skills.add("Take Aim");
             skills.add("Volley Shot");
         } else if (type.equals("test")) {
             attack = 9001;
@@ -100,13 +117,74 @@ public class Character {
             energyMulti = 1;
             energyRegen = 9001;
             energyRegenMulti = 1;
+            characterLevel = 9001;
             skills.add("Strike of God");
         }
     }
 
 
-    //CHARACTER ACTIONS
-
+    //CHARACTER ATTACKS
+    public double characterAttack(String attackName) {
+        double damageDealt = 0;
+        int attackSuccessful = (int) (1 + Math.random() * 100);
+        int critRandomizer = (int) (Math.random() * 100);
+        boolean crit = false;
+        boolean hit = false;
+        if (critRandomizer >= 100 - (critChance * 100)){
+            crit = true;
+        }
+        if (attackSuccessful >= 25) {
+            hit = true;
+        }
+        //SWORDSMAN ATTACKS
+        if (type.equals("swordsman")) {
+            if (hit) {
+                //Crit attacks
+                if (crit) {
+                    if (attackName.equals("slice")) {
+                        damageDealt = attack * attackMulti * critBonus;
+                        energy -= 25;
+                    }
+                    if (attackName.equals("Cleave")) {
+                        damageDealt = attack * attackMulti * critBonus * 1.33;
+                        energy -= 35;
+                    }
+                    if (attackName.equals("Flurry Strike")) {
+                        damageDealt = attack * attackMulti * critBonus * 3;
+                        energy -= 75;
+                    }
+                } else{
+                    if (attackName.equals("slice")) {
+                        damageDealt = attack * attackMulti;
+                        energy -= 25;
+                    }
+                    if (attackName.equals("Cleave")) {
+                        damageDealt = attack * attackMulti * 1.33;
+                        energy -= 35;
+                    }
+                    if (attackName.equals("Flurry Strike")) {
+                        damageDealt = attack * attackMulti * 3;
+                        energy -= 75;
+                    }
+                }
+            }
+        }
+        if (type.equals("mage")) {
+            if (hit) {
+                if(crit) {
+                    if (attackName.equals("Fireball")) {
+                        damageDealt = attack * attackMulti * critBonus * 1.2;
+                        energy -= 30;
+                    }
+                    if (attackName.equals("Magic Blast")) {
+                        damageDealt = attack * attackMulti * critBonus;
+                        energy -= 25;
+                    }
+                }
+            }
+        }
+        return damageDealt;
+    }
 
 
 

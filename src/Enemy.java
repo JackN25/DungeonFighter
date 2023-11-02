@@ -41,8 +41,9 @@ public class Enemy {
         }
     }
 
-    public double enemyAttack(int attackType) {
-        double damageDealt = 0;
+    public double enemyAttack() {
+        double damageDealt;
+        int attackType = (int) (1 + Math.random() * 4);
         if (attackType == 1) {
             damageDealt = enemyAttack;
         } else if (attackType == 2) {
@@ -54,6 +55,5 @@ public class Enemy {
         }
         return damageDealt;
     }
-
 
 }
