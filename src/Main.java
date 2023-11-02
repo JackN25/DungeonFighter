@@ -1,5 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("You ");
+        System.out.println("Dungeon Time!");
+        System.out.println();
     }
 }

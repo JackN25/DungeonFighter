@@ -14,7 +14,10 @@ public class Character {
     private double energyRegen;
     private double energyRegenMulti;
     private ArrayList<String> accessories = new ArrayList<String>();
+    private ArrayList<String> skills = new ArrayList<String>();
 
+
+    //CREATES THE CHARACTER WITH STARTING SKILLS AND STATS
     public Character(String type, String name) {
         this.name = name;
         this.type = type;
@@ -29,6 +32,12 @@ public class Character {
             energyMulti= 1.2;
             energyRegen = 20;
             energyRegenMulti = 1.1;
+            skills.add("Slice");
+            skills.add("Cleave");
+            skills.add("Block");
+            skills.add("Bandage");
+            skills.add("Strengthen");
+            skills.add("Flurry strike");
         } else if (type.equals("mage")) {
             attack = 12;
             attackMulti = 1.3;
@@ -40,6 +49,12 @@ public class Character {
             energyMulti = 1.3;
             energyRegen = 30;
             energyRegenMulti = 1.3;
+            skills.add("Fireball");
+            skills.add("Snowball");
+            skills.add("Shield");
+            skills.add("Heal");
+            skills.add("Empower");
+            skills.add("Elemental Storm");
         } else if (type.equals("tank")) {
             attack = 10;
             attackMulti = 1.2;
@@ -51,6 +66,12 @@ public class Character {
             energyMulti = 1.2;
             energyRegen = 20;
             energyRegenMulti = 1.1;
+            skills.add("Smack");
+            skills.add("Slam");
+            skills.add("Bandage");
+            skills.add("Parry");
+            skills.add("Solidify");
+            skills.add("idk for ultimate");
         } else if (type.equals("marksman")) {
             attack = 10;
             attackMulti = 1.3;
@@ -62,6 +83,12 @@ public class Character {
             energyMulti = 1.2;
             energyRegen = 20;
             energyRegenMulti = 1.1;
+            skills.add("Shoot");
+            skills.add("Stab");
+            skills.add("Retreat");
+            skills.add("Bandage");
+            skills.add("Precision");
+            skills.add("Volley Shot");
         } else if (type.equals("test")) {
             attack = 9001;
             attackMulti = 1;
@@ -73,9 +100,12 @@ public class Character {
             energyMulti = 1;
             energyRegen = 9001;
             energyRegenMulti = 1;
+            skills.add("Strike of God");
         }
     }
 
+
+    //CHARACTER ACTIONS
 
 
 
