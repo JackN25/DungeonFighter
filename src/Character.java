@@ -49,7 +49,8 @@ public class Character {
             skills.add("Bandage");
             skills.add("Strengthen");
             skills.add("Flurry strike");
-        } else if (type.equals("mage")) {
+        }
+        else if (type.equals("mage")) {
             attack = 12;
             attackMulti = 1.3;
             health = 80;
@@ -68,7 +69,8 @@ public class Character {
             skills.add("Heal");
             skills.add("Empower");
             skills.add("Elemental Storm");
-        } else if (type.equals("tank")) {
+        }
+        else if (type.equals("tank")) {
             attack = 10;
             attackMulti = 1.2;
             health = 150;
@@ -86,8 +88,9 @@ public class Character {
             skills.add("Bandage");
             skills.add("Parry");
             skills.add("Solidify");
-            skills.add("idk for ultimate");
-        } else if (type.equals("marksman")) {
+            skills.add("tank ult");
+        }
+        else if (type.equals("marksman")) {
             attack = 10;
             attackMulti = 1.3;
             health = 90;
@@ -106,7 +109,8 @@ public class Character {
             skills.add("Bandage");
             skills.add("Take Aim");
             skills.add("Volley Shot");
-        } else if (type.equals("test")) {
+        }
+        else if (type.equals("test")) {
             attack = 9001;
             attackMulti = 1;
             health = 9001;
@@ -145,11 +149,11 @@ public class Character {
                         damageDealt = attack * attackMulti * critBonus;
                         energy -= 25;
                     }
-                    if (attackName.equals("Cleave")) {
+                    if (attackName.equals("cleave")) {
                         damageDealt = attack * attackMulti * critBonus * 1.33;
                         energy -= 35;
                     }
-                    if (attackName.equals("Flurry Strike")) {
+                    if (attackName.equals("flurry strike")) {
                         damageDealt = attack * attackMulti * critBonus * 3;
                         energy -= 75;
                     }
@@ -158,29 +162,113 @@ public class Character {
                         damageDealt = attack * attackMulti;
                         energy -= 25;
                     }
-                    if (attackName.equals("Cleave")) {
+                    if (attackName.equals("cleave")) {
                         damageDealt = attack * attackMulti * 1.33;
                         energy -= 35;
                     }
-                    if (attackName.equals("Flurry Strike")) {
+                    if (attackName.equals("flurry strike")) {
                         damageDealt = attack * attackMulti * 3;
                         energy -= 75;
                     }
                 }
             }
         }
-        if (type.equals("mage")) {
+        else if (type.equals("mage")) {
             if (hit) {
                 if(crit) {
-                    if (attackName.equals("Fireball")) {
+                    if (attackName.equals("fireball")) {
                         damageDealt = attack * attackMulti * critBonus * 1.2;
                         energy -= 30;
                     }
-                    if (attackName.equals("Magic Blast")) {
+                    if (attackName.equals("magic Blast")) {
                         damageDealt = attack * attackMulti * critBonus;
                         energy -= 25;
                     }
+                    if (attackName.equals("elemental storm")) {
+                        damageDealt = attack * attackMulti * critBonus * 3;
+                        energy -= 80;
+                    }
+                } else {
+                    if (attackName.equals("fireball")) {
+                        damageDealt = attack * attackMulti * 1.2;
+                        energy -= 30;
+                    }
+                    if (attackName.equals("magic Blast")) {
+                        damageDealt = attack * attackMulti;
+                        energy -= 25;
+                    }
+                    if (attackName.equals("elemental storm")) {
+                        damageDealt = attack * attackMulti * 3;
+                        energy -= 80;
+                    }
                 }
+            }
+        }
+        else if (type.equals("tank")) {
+            if (hit) {
+                if(crit) {
+                    if (attackName.equals("smack")) {
+                        damageDealt = attack * attackMulti * critBonus;
+                        energy -= 30;
+                    }
+                    if (attackName.equals("slam")) {
+                        damageDealt = attack * attackMulti * critBonus * 1.5;
+                        energy -= 25;
+                    }
+                    if (attackName.equals("tank ult")) {
+                        damageDealt = attack * attackMulti * critBonus * 3;
+                        energy -= 80;
+                    }
+                } else {
+                    if (attackName.equals("smack")) {
+                        damageDealt = attack * attackMulti;
+                        energy -= 30;
+                    }
+                    if (attackName.equals("slam")) {
+                        damageDealt = attack * attackMulti * 1.3;
+                        energy -= 35;
+                    }
+                    if (attackName.equals("tank ult")) {
+                        damageDealt = attack * attackMulti * 3;
+                        energy -= 80;
+                    }
+                }
+            }
+        }
+        else if (type.equals("marksman")) {
+            if (hit) {
+                if(crit) {
+                    if (attackName.equals("shoot")) {
+                        damageDealt = attack * attackMulti * critBonus * 1.3;
+                        energy -= 30;
+                    }
+                    if (attackName.equals("stab")) {
+                        damageDealt = attack * attackMulti * critBonus;
+                        energy -= 25;
+                    }
+                    if (attackName.equals("volley shot")) {
+                        damageDealt = attack * attackMulti * critBonus * 3;
+                        energy -= 75;
+                    }
+                } else {
+                    if (attackName.equals("shoot")) {
+                        damageDealt = attack * attackMulti * 1.3;
+                        energy -= 25;
+                    }
+                    if (attackName.equals("stab")) {
+                        damageDealt = attack * attackMulti;
+                        energy -= 20;
+                    }
+                    if (attackName.equals("volley shot")) {
+                        damageDealt = attack * attackMulti * 3;
+                        energy -= 75;
+                    }
+                }
+            }
+        }
+        else if (type.equals("test")) {
+            if (crit) {
+                damageDealt = attack * attackMulti * critBonus;
             }
         }
         return damageDealt;
@@ -231,5 +319,8 @@ public class Character {
     }
     public double getEnergyRegenMulti(){
         return energyRegenMulti;
+    }
+    public ArrayList<String> getAccessories() {
+        return accessories;
     }
 }

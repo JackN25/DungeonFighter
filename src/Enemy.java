@@ -56,4 +56,7 @@ public class Enemy {
         return damageDealt;
     }
 
+    public String getEnemyName() {
+        return enemyName;
+    }
 }
