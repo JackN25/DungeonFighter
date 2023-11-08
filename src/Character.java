@@ -7,21 +7,27 @@ public class Character {
     private double healthMulti;
     private double attack;
     private double attackMulti;
-    private double defense;
-    private double defenseMulti;
+    //private double defense;
+    //private double defenseMulti;
     private double energy;
+    private double maxEnergy;
     private double energyMulti;
     private double energyRegen;
     private double energyRegenMulti;
     private double critChance;
     private double critBonus;
     private double attack1cd = 1;
+    private double roundsAfterAttack1;
     private double attack2cd = 2;
+    private double roundsAfterAttack2;
     private double attack3cd = 5;
-    private double precision = 0;
-    private double characterLevel;
+    private double roundsAfterAttack3;
+    //private double precision;
+    private int characterLevel;
+    private int characterExp;
+    private int characterExpUntilNextLevel;
 
-    private ArrayList<String> accessories = new ArrayList<String>();
+    //private ArrayList<String> accessories = new ArrayList<String>();
     private ArrayList<String> skills = new ArrayList<String>();
 
 
@@ -30,13 +36,21 @@ public class Character {
         this.name = name;
         this.type = type;
         characterLevel = 0;
+        characterExpUntilNextLevel = 100;
+
+        setAttributes();
+    }
+
+    //Attribute Initialization
+    public void setAttributes(){
         if (type.equals("swordsman")) {
             attack = 11;
             attackMulti = 1.3;
             health = 100;
             healthMulti = 1.2;
-            defense = 15;
-            defenseMulti = 1.2;
+            //defense = 15;
+            //defenseMulti = 1.2;
+            maxEnergy = 100;
             energy = 100;
             energyMulti= 1.2;
             energyRegen = 20;
@@ -55,8 +69,9 @@ public class Character {
             attackMulti = 1.3;
             health = 80;
             healthMulti = 1.1;
-            defense = 10;
-            defenseMulti = 1.1;
+            //defense = 10;
+            //defenseMulti = 1.1;
+            maxEnergy = 175;
             energy = 175;
             energyMulti = 1.3;
             energyRegen = 30;
@@ -75,8 +90,9 @@ public class Character {
             attackMulti = 1.2;
             health = 150;
             healthMulti = 1.3;
-            defense = 20;
-            defenseMulti = 1.3;
+            //defense = 20;
+            //defenseMulti = 1.3;
+            maxEnergy = 90;
             energy = 90;
             energyMulti = 1.2;
             energyRegen = 20;
@@ -95,8 +111,9 @@ public class Character {
             attackMulti = 1.3;
             health = 90;
             healthMulti = 1.1;
-            defense = 15;
-            defenseMulti = 1.2;
+            //defense = 15;
+            //defenseMulti = 1.2;
+            maxEnergy = 100;
             energy = 100;
             energyMulti = 1.2;
             energyRegen = 20;
@@ -111,12 +128,14 @@ public class Character {
             skills.add("Volley Shot");
         }
         else if (type.equals("test")) {
+            characterLevel = 9001;
             attack = 9001;
             attackMulti = 1;
             health = 9001;
             healthMulti = 1;
-            defense = 9001;
-            defenseMulti = 1;
+            //defense = 9001;
+            //defenseMulti = 1;
+            maxEnergy = 9001;
             energy = 9001;
             energyMulti = 1;
             energyRegen = 9001;
@@ -274,8 +293,31 @@ public class Character {
         return damageDealt;
     }
 
+    public void regenEnergy() {
+        double energyRegained = energyRegen * energyRegenMulti;
+        if (energyRegained + energy > maxEnergy) {
+            energy += maxEnergy - energy;
+        } else {
+            energy += energyRegained;
+        }
+    }
 
+    public void levelUp() {
+        characterLevel ++;
+        attackMulti += 0.15;
+        healthMulti += 0.15;
+        if (characterLevel % 15 == 0) {
+            maxEnergy += 10;
+        }
+        energyRegenMulti += 0.1;
 
+    }
+
+    public void recalculateCharacterStats() {
+        attack = attack * attackMulti;
+        health = health * healthMulti;
+        energyRegen = energyRegen * energyRegenMulti;
+    }
 
 
 
@@ -302,12 +344,12 @@ public class Character {
     public double getAttackMulti(){
         return attackMulti;
     }
-    public double getDefense(){
+    /* public double getDefense(){
         return defense;
     }
     public double getDefenseMulti(){
         return defenseMulti;
-    }
+    } */ //defense not implemented
     public double getEnergy(){
         return energy;
     }
@@ -320,7 +362,7 @@ public class Character {
     public double getEnergyRegenMulti(){
         return energyRegenMulti;
     }
-    public ArrayList<String> getAccessories() {
+    /*public ArrayList<String> getAccessories() {
         return accessories;
-    }
+    }*/ // accessories not implemented
 }

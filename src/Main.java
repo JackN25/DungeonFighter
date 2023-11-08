@@ -2,13 +2,14 @@ import com.sun.source.tree.WhileLoopTree;
 
 import java.util.Scanner;
 public class Main {
+    static int whatHappensNext;
     static String type;
     static String name;
-    static double dungeonFloor = 0;
+    static int dungeonFloor = 0;
     static double difficultyMulti = 1;
     static boolean gameOver = false;
     static boolean characterChosen = false;
-    static String roles = "Swordsman\nMage\nTank\nMarksman";
+    static String roles = "swordsman\nmage\ntank\nmarksman";
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         System.out.println("Dungeon Time!");
@@ -30,7 +31,20 @@ public class Main {
         Character player = new Character(type, name);
         while (!gameOver) {
             dungeonFloor++;
-
+            whatHappensNext = (int) (Math.random() * 11);
+            if (dungeonFloor % 5 == 0) {
+                Enemy boss = new Enemy(difficultyMulti, dungeonFloor);
+                System.out.println(boss.getEnemyName());
+            }
+            else if (whatHappensNext >= 0 && whatHappensNext <= 6) {
+                Enemy normalEnemy = new Enemy(difficultyMulti, dungeonFloor);
+                System.out.println(normalEnemy.getEnemyName());
+            } else if (whatHappensNext > 6 && whatHappensNext <= 9) {
+                System.out.println("Secret chest!");
+            } else {
+                System.out.println("ENEMY: CHEST MIMIC");
+                Enemy mimicMoment = new Enemy(difficultyMulti, dungeonFloor, "Chest Mimic");
+            }
         }
     }
 }
