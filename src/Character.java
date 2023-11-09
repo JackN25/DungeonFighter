@@ -11,7 +11,7 @@ public class Character {
     //private double defenseMulti;
     private double energy;
     private double maxEnergy;
-    private double energyMulti;
+    private double maxEnergyMulti;
     private double energyRegen;
     private double energyRegenMulti;
     private double critChance;
@@ -37,9 +37,9 @@ public class Character {
         this.type = type;
         characterLevel = 0;
         characterExpUntilNextLevel = 100;
-
         setAttributes();
     }
+
 
     //Attribute Initialization
     public void setAttributes(){
@@ -52,7 +52,7 @@ public class Character {
             //defenseMulti = 1.2;
             maxEnergy = 100;
             energy = 100;
-            energyMulti= 1.2;
+            maxEnergyMulti= 1.2;
             energyRegen = 20;
             energyRegenMulti = 1.1;
             critChance = 0.33;
@@ -73,7 +73,7 @@ public class Character {
             //defenseMulti = 1.1;
             maxEnergy = 175;
             energy = 175;
-            energyMulti = 1.3;
+            maxEnergyMulti = 1.3;
             energyRegen = 30;
             energyRegenMulti = 1.3;
             critChance = 0.33;
@@ -94,7 +94,7 @@ public class Character {
             //defenseMulti = 1.3;
             maxEnergy = 90;
             energy = 90;
-            energyMulti = 1.2;
+            maxEnergyMulti = 1.2;
             energyRegen = 20;
             energyRegenMulti = 1.1;
             critChance = 0.15;
@@ -115,7 +115,7 @@ public class Character {
             //defenseMulti = 1.2;
             maxEnergy = 100;
             energy = 100;
-            energyMulti = 1.2;
+            maxEnergyMulti = 1.2;
             energyRegen = 20;
             energyRegenMulti = 1.1;
             critChance = 0.45;
@@ -137,7 +137,7 @@ public class Character {
             //defenseMulti = 1;
             maxEnergy = 9001;
             energy = 9001;
-            energyMulti = 1;
+            maxEnergyMulti = 1;
             energyRegen = 9001;
             energyRegenMulti = 1;
             characterLevel = 9001;
@@ -307,19 +307,23 @@ public class Character {
         attackMulti += 0.15;
         healthMulti += 0.15;
         if (characterLevel % 15 == 0) {
+            attack += 5;
+            health += 7;
             maxEnergy += 10;
         }
         energyRegenMulti += 0.1;
-
     }
 
     public void recalculateCharacterStats() {
         attack = attack * attackMulti;
         health = health * healthMulti;
         energyRegen = energyRegen * energyRegenMulti;
+        maxEnergy = maxEnergy * maxEnergyMulti;
     }
 
-
+    public String toString(){
+        return "Health: " + health +"\nEnergy: " + energy + "\n Attack Cooldowns: \nAttack 1: " + attack1cd + " | Attack 2: " + attack2cd + "  |  Attack 3: " + attack3cd;
+    }
 
 
 
@@ -353,8 +357,8 @@ public class Character {
     public double getEnergy(){
         return energy;
     }
-    public double getEnergyMulti(){
-        return energyMulti;
+    public double getMaxEnergyMulti(){
+        return maxEnergyMulti;
     }
     public double getEnergyRegen(){
         return energyRegen;

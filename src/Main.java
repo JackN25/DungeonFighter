@@ -1,16 +1,13 @@
-import com.sun.source.tree.WhileLoopTree;
-
 import java.util.Scanner;
 public class Main {
-    static int whatHappensNext;
-    static String type;
-    static String name;
-    static int dungeonFloor = 0;
-    static double difficultyMulti = 1;
-    static boolean gameOver = false;
-    static boolean characterChosen = false;
-    static String roles = "swordsman\nmage\ntank\nmarksman";
     public static void main(String[] args) {
+        int whatHappensNext;
+        String type = "";
+        String name;
+        int dungeonFloor = 0;
+        double difficultyMulti = 1;
+        boolean gameOver = false;
+        boolean characterChosen = false;
         Scanner s = new Scanner(System.in);
         System.out.println("Dungeon Time!");
         while (!characterChosen) {
@@ -18,7 +15,7 @@ public class Main {
             System.out.println("Swordsman\nMage\nTank\nMarksman");
             System.out.print("Enter the character you choose: ");
             type = s.nextLine();
-            if (roles.contains(type.toLowerCase())) {
+            if (type.toLowerCase().equals("swordsman") || type.toLowerCase().equals("mage") || type.toLowerCase().equals("tank") || type.toLowerCase().equals("marksman") || type.toLowerCase().equals("test")) {
                 characterChosen = true;
 
             } else {
