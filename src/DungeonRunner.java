@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class Main {
+public class DungeonRunner {
     public static void main(String[] args) {
         int whatHappensNext;
         String type = "";
