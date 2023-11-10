@@ -1,14 +1,20 @@
 import java.util.Scanner;
+import java.text.DecimalFormat;
+import java.math.RoundingMode;
 public class DungeonRunner {
     public static void main(String[] args) {
-        int whatHappensNext;
+
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+
         String type = "";
         String name;
-        int dungeonFloor = 0;
         double difficultyMulti = 1;
         boolean gameOver = false;
         boolean characterChosen = false;
         Scanner s = new Scanner(System.in);
+
+
         System.out.println("Dungeon Time!");
         while (!characterChosen) {
             System.out.println("Here are 4 roles that you can choose:");
@@ -27,26 +33,34 @@ public class DungeonRunner {
         name = s.nextLine();
 
         Character player = new Character(type, name);
+        Dungeon dungeon = new Dungeon();
+
         while (!gameOver) {
-            dungeonFloor++;
-            whatHappensNext = (int) (Math.random() * 11);
-            if (dungeonFloor % 5 == 0) {
-                Enemy boss = new Enemy(difficultyMulti, dungeonFloor);
+            dungeon.nextFloor();
+            System.out.println(player.toString());
+            if (dungeon.determineNextEvent() == 1) {
+                Enemy boss = new Enemy(difficultyMulti, dungeon.getDungeonFloor());
                 System.out.println(boss.getEnemyName());
             }
-            else if (whatHappensNext >= 0 && whatHappensNext <= 6) {
-                Enemy normalEnemy = new Enemy(difficultyMulti, dungeonFloor);
+            else if (dungeon.determineNextEvent() == 2) {
+                Enemy normalEnemy = new Enemy(difficultyMulti, dungeon.getDungeonFloor());
                 System.out.println(normalEnemy.getEnemyName());
             }
-            else if (whatHappensNext > 6 && whatHappensNext <= 9) {
-                System.out.println("Secret chest!");
+            else if (dungeon.determineNextEvent() == 3) {
+                System.out.println("You found a secret chest!\nYour level has been increased by 1!");
+                player.levelUp();
+                player.recalculateCharacterStats();
             }
             else {
                 System.out.println("ENEMY: CHEST MIMIC");
-                Enemy mimicMoment = new Enemy(difficultyMulti, dungeonFloor, "Chest Mimic");
+                Enemy mimicMoment = new Enemy(difficultyMulti, dungeon.getDungeonFloor(), "Chest Mimic");
             }
 
             if (player.getHealth() <= 0) {
+                gameOver = true;
+            }
+
+            if (dungeon.getDungeonFloor() > 100) {
                 gameOver = true;
             }
         }

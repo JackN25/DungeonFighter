@@ -4,7 +4,8 @@ public class Character {
     private String type;
     private String name;
     private double health;
-    private double healthMulti;
+    private double maxHealth;
+    private double maxHealthMulti;
     private double attack;
     private double attackMulti;
     //private double defense;
@@ -46,8 +47,9 @@ public class Character {
         if (type.equals("swordsman")) {
             attack = 11;
             attackMulti = 1.3;
+            maxHealth = 100;
             health = 100;
-            healthMulti = 1.2;
+            maxHealthMulti = 1.2;
             //defense = 15;
             //defenseMulti = 1.2;
             maxEnergy = 100;
@@ -67,8 +69,9 @@ public class Character {
         else if (type.equals("mage")) {
             attack = 12;
             attackMulti = 1.3;
+            maxHealth = 80;
             health = 80;
-            healthMulti = 1.1;
+            maxHealthMulti = 1.1;
             //defense = 10;
             //defenseMulti = 1.1;
             maxEnergy = 175;
@@ -89,7 +92,8 @@ public class Character {
             attack = 10;
             attackMulti = 1.2;
             health = 150;
-            healthMulti = 1.3;
+            maxHealth = 150;
+            maxHealthMulti = 1.3;
             //defense = 20;
             //defenseMulti = 1.3;
             maxEnergy = 90;
@@ -110,7 +114,8 @@ public class Character {
             attack = 10;
             attackMulti = 1.3;
             health = 90;
-            healthMulti = 1.1;
+            maxHealth = 90;
+            maxHealthMulti = 1.1;
             //defense = 15;
             //defenseMulti = 1.2;
             maxEnergy = 100;
@@ -132,7 +137,8 @@ public class Character {
             attack = 9001;
             attackMulti = 1;
             health = 9001;
-            healthMulti = 1;
+            maxHealth = 9001;
+            maxHealthMulti = 1;
             //defense = 9001;
             //defenseMulti = 1;
             maxEnergy = 9001;
@@ -305,10 +311,10 @@ public class Character {
     public void levelUp() {
         characterLevel ++;
         attackMulti += 0.15;
-        healthMulti += 0.15;
+        maxHealthMulti += 0.001;
         if (characterLevel % 15 == 0) {
             attack += 5;
-            health += 7;
+            maxHealth += 7;
             maxEnergy += 10;
         }
         energyRegenMulti += 0.1;
@@ -316,13 +322,13 @@ public class Character {
 
     public void recalculateCharacterStats() {
         attack = attack * attackMulti;
-        health = health * healthMulti;
+        maxHealth = maxHealth * maxHealthMulti;
         energyRegen = energyRegen * energyRegenMulti;
         maxEnergy = maxEnergy * maxEnergyMulti;
     }
 
     public String toString(){
-        return "Health: " + health +"\nEnergy: " + energy + "\n Attack Cooldowns: \nAttack 1: " + attack1cd + " | Attack 2: " + attack2cd + "  |  Attack 3: " + attack3cd;
+        return "Health: " + health + "/" + maxHealth +"\nEnergy: " + energy + "\nAttack Cooldowns: \nAttack 1: " + attack1cd + " | Attack 2: " + attack2cd + "  |  Attack 3: " + attack3cd;
     }
 
 
@@ -339,8 +345,11 @@ public class Character {
     public double getHealth(){
         return health;
     }
-    public double getHealthMulti(){
-        return healthMulti;
+    public double getMaxHealth(){
+        return maxHealth;
+    }
+    public double getMaxHealthMulti(){
+        return maxHealthMulti;
     }
     public double getAttack(){
         return attack;
