@@ -64,7 +64,14 @@ public class Enemy {
         return damageDealt;
     }
 
+    public void updateEnemyHealth(double damageTaken){
+        enemyHealth = enemyHealth - damageTaken;
+    }
+
     public String getEnemyName() {
         return enemyName;
+    }
+    public double getEnemyHealth(){
+        return enemyHealth;
     }
 }

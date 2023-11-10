@@ -18,7 +18,8 @@ public class DungeonRunner {
             if (type.toLowerCase().equals("swordsman") || type.toLowerCase().equals("mage") || type.toLowerCase().equals("tank") || type.toLowerCase().equals("marksman") || type.toLowerCase().equals("test")) {
                 characterChosen = true;
 
-            } else {
+            }
+            else {
                 System.out.println("Please choose one of the 4 roles.\n\n\n");
             }
         }
@@ -36,11 +37,17 @@ public class DungeonRunner {
             else if (whatHappensNext >= 0 && whatHappensNext <= 6) {
                 Enemy normalEnemy = new Enemy(difficultyMulti, dungeonFloor);
                 System.out.println(normalEnemy.getEnemyName());
-            } else if (whatHappensNext > 6 && whatHappensNext <= 9) {
+            }
+            else if (whatHappensNext > 6 && whatHappensNext <= 9) {
                 System.out.println("Secret chest!");
-            } else {
+            }
+            else {
                 System.out.println("ENEMY: CHEST MIMIC");
                 Enemy mimicMoment = new Enemy(difficultyMulti, dungeonFloor, "Chest Mimic");
+            }
+
+            if (player.getHealth() <= 0) {
+                gameOver = true;
             }
         }
     }
