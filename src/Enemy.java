@@ -5,7 +5,7 @@ public class Enemy {
     private double enemyAttack;
     private String enemyName;
 
-    public Enemy(int difficultyMulti, int dungeonFloor) {
+    public Enemy(double difficultyMulti, int dungeonFloor) {
             this.difficultyMulti = difficultyMulti;
             this.dungeonFloor = dungeonFloor;
         int enemyChooser = (int) (1 + (Math.random() * 3));
@@ -39,6 +39,14 @@ public class Enemy {
                 enemyAttack = 5 * difficultyMulti * (1 + dungeonFloor / 5.0 * 0.3);
             }
         }
+    }
+
+    public Enemy(double difficultyMulti, int dungeonFloor, String name) {
+        this.difficultyMulti = difficultyMulti;
+        this.dungeonFloor = dungeonFloor;
+        enemyName = "Goblin";
+        enemyHealth = 25 * difficultyMulti * (dungeonFloor * 0.2);
+        enemyAttack = 10 * difficultyMulti * (dungeonFloor * 0.3);
     }
 
     public double enemyAttack() {
