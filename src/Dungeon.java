@@ -1,5 +1,3 @@
-import javax.naming.NamingEnumeration;
-
 public class Dungeon {
     private int dungeonFloor;
     private int whatHappensNext;

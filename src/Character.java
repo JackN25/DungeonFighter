@@ -1,16 +1,21 @@
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Character {
     private String type;
     private String name;
+    private double baseHealth;
     private double health;
     private double maxHealth;
     private double maxHealthMulti;
     private double attack;
+    private double baseAttack;
     private double attackMulti;
     //private double defense;
     //private double defenseMulti;
     private double energy;
+    private double baseEnergy;
     private double maxEnergy;
     private double maxEnergyMulti;
     private double energyRegen;
@@ -34,6 +39,10 @@ public class Character {
 
     //CREATES THE CHARACTER WITH STARTING SKILLS AND STATS
     public Character(String type, String name) {
+
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+
         this.name = name;
         this.type = type;
         characterLevel = 0;
@@ -46,14 +55,17 @@ public class Character {
     public void setAttributes(){
         if (type.equals("swordsman")) {
             attack = 11;
+            baseAttack = 11;
             attackMulti = 1.3;
             maxHealth = 100;
+            baseHealth = 100;
             health = 100;
             maxHealthMulti = 1.2;
             //defense = 15;
             //defenseMulti = 1.2;
             maxEnergy = 100;
             energy = 100;
+            baseEnergy = 100;
             maxEnergyMulti= 1.2;
             energyRegen = 20;
             energyRegenMulti = 1.1;
@@ -68,14 +80,17 @@ public class Character {
         }
         else if (type.equals("mage")) {
             attack = 12;
+            baseAttack = 12;
             attackMulti = 1.3;
             maxHealth = 80;
+            baseHealth = 80;
             health = 80;
             maxHealthMulti = 1.1;
             //defense = 10;
             //defenseMulti = 1.1;
             maxEnergy = 175;
             energy = 175;
+            baseEnergy = 175;
             maxEnergyMulti = 1.3;
             energyRegen = 30;
             energyRegenMulti = 1.3;
@@ -90,14 +105,17 @@ public class Character {
         }
         else if (type.equals("tank")) {
             attack = 10;
+            baseAttack = 10;
             attackMulti = 1.2;
             health = 150;
+            baseHealth = 150;
             maxHealth = 150;
             maxHealthMulti = 1.3;
             //defense = 20;
             //defenseMulti = 1.3;
             maxEnergy = 90;
             energy = 90;
+            baseEnergy = 90;
             maxEnergyMulti = 1.2;
             energyRegen = 20;
             energyRegenMulti = 1.1;
@@ -112,14 +130,17 @@ public class Character {
         }
         else if (type.equals("marksman")) {
             attack = 10;
+            baseAttack = 10;
             attackMulti = 1.3;
             health = 90;
             maxHealth = 90;
+            baseHealth = 90;
             maxHealthMulti = 1.1;
             //defense = 15;
             //defenseMulti = 1.2;
             maxEnergy = 100;
             energy = 100;
+            baseEnergy = 100;
             maxEnergyMulti = 1.2;
             energyRegen = 20;
             energyRegenMulti = 1.1;
@@ -135,14 +156,17 @@ public class Character {
         else if (type.equals("test")) {
             characterLevel = 9001;
             attack = 9001;
+            baseAttack = 9001;
             attackMulti = 1;
             health = 9001;
+            baseHealth = 9001;
             maxHealth = 9001;
             maxHealthMulti = 1;
             //defense = 9001;
             //defenseMulti = 1;
             maxEnergy = 9001;
             energy = 9001;
+            baseEnergy = 9001;
             maxEnergyMulti = 1;
             energyRegen = 9001;
             energyRegenMulti = 1;
@@ -313,22 +337,26 @@ public class Character {
         attackMulti += 0.15;
         maxHealthMulti += 0.001;
         if (characterLevel % 15 == 0) {
-            attack += 5;
+            baseAttack += 5;
             maxHealth += 7;
             maxEnergy += 10;
         }
-        energyRegenMulti += 0.1;
+        energyRegenMulti += 0.02;
     }
 
     public void recalculateCharacterStats() {
-        attack = attack * attackMulti;
-        maxHealth = maxHealth * maxHealthMulti;
+        attack = baseAttack * attackMulti;
+        maxHealth = baseHealth * maxHealthMulti;
         energyRegen = energyRegen * energyRegenMulti;
-        maxEnergy = maxEnergy * maxEnergyMulti;
+        maxEnergy = baseEnergy * maxEnergyMulti;
     }
 
     public String toString(){
-        return "Health: " + health + "/" + maxHealth +"\nEnergy: " + energy + "\nAttack Cooldowns: \nAttack 1: " + attack1cd + " | Attack 2: " + attack2cd + "  |  Attack 3: " + attack3cd;
+
+        DecimalFormat df = new DecimalFormat("#");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+
+        return "Health: " + df.format(health) + "/" + df.format(maxHealth) +"\nEnergy: " + df.format(energy) +"/" + df.format(maxEnergy) + "\nAttack Cooldowns: \n" +   ": " + attack1cd + " | " +  ": " + attack2cd + " | " + ": " + attack3cd;
     }
 
 

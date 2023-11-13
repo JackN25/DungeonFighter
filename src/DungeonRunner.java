@@ -37,6 +37,7 @@ public class DungeonRunner {
 
         while (!gameOver) {
             dungeon.nextFloor();
+            player.regenEnergy();
             System.out.println(player.toString());
             if (dungeon.determineNextEvent() == 1) {
                 Enemy boss = new Enemy(difficultyMulti, dungeon.getDungeonFloor());
