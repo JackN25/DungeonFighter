@@ -13,7 +13,7 @@ public class DungeonRunner {
         boolean gameOver = false;
         boolean characterChosen = false;
         Scanner s = new Scanner(System.in);
-
+        Enemy enemy = new Enemy(0,0);
 
         System.out.println("Dungeon Time!");
         while (!characterChosen) {
@@ -35,17 +35,22 @@ public class DungeonRunner {
         Character player = new Character(type, name);
         Dungeon dungeon = new Dungeon();
 
+        boolean inCombat = false;
+
         while (!gameOver) {
             dungeon.nextFloor();
+            player.reduceSkillcd();
             player.regenEnergy();
-            System.out.println(player.toString());
+            System.out.println(player);
             if (dungeon.determineNextEvent() == 1) {
-                Enemy boss = new Enemy(difficultyMulti, dungeon.getDungeonFloor());
-                System.out.println(boss.getEnemyName());
+                enemy = new Enemy(difficultyMulti, dungeon.getDungeonFloor());
+                System.out.println(enemy.getEnemyName());
+                inCombat = true;
             }
             else if (dungeon.determineNextEvent() == 2) {
-                Enemy normalEnemy = new Enemy(difficultyMulti, dungeon.getDungeonFloor());
-                System.out.println(normalEnemy.getEnemyName());
+                enemy = new Enemy(difficultyMulti, dungeon.getDungeonFloor());
+                System.out.println(enemy.getEnemyName());
+                inCombat = true;
             }
             else if (dungeon.determineNextEvent() == 3) {
                 System.out.println("You found a secret chest!\nYour level has been increased by 1!");
@@ -54,15 +59,21 @@ public class DungeonRunner {
             }
             else {
                 System.out.println("ENEMY: CHEST MIMIC");
-                Enemy mimicMoment = new Enemy(difficultyMulti, dungeon.getDungeonFloor(), "Chest Mimic");
+                enemy = new Enemy(difficultyMulti, dungeon.getDungeonFloor(), "Chest Mimic");
+                inCombat = true;
             }
 
-            if (player.getHealth() <= 0) {
-                gameOver = true;
-            }
 
-            if (dungeon.getDungeonFloor() > 100) {
-                gameOver = true;
+            if (inCombat) {
+                System.out.println("\n\n\n\n\n\n\n\n\n-------------------------------------------");
+                while (enemy.getEnemyHealth() > 0) {
+                    System.out.println(enemy.getEnemyName());
+                    System.out.println("Enemy Health: " + enemy.getEnemyHealth());
+                    System.out.println("------");
+                    System.out.println("Your stats: ");
+                    System.out.println(player);
+
+                }
             }
         }
     }

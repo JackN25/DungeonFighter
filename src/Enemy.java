@@ -44,7 +44,7 @@ public class Enemy {
     public Enemy(double difficultyMulti, int dungeonFloor, String name) {
         this.difficultyMulti = difficultyMulti;
         this.dungeonFloor = dungeonFloor;
-        enemyName = "Goblin";
+        enemyName = "Chest Mimic";
         enemyHealth = 25 * difficultyMulti * (dungeonFloor * 0.2);
         enemyAttack = 10 * difficultyMulti * (dungeonFloor * 0.3);
     }

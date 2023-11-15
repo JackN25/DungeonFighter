@@ -22,12 +22,16 @@ public class Character {
     private double energyRegenMulti;
     private double critChance;
     private double critBonus;
-    private double attack1cd = 1;
-    private double roundsAfterAttack1;
-    private double attack2cd = 2;
-    private double roundsAfterAttack2;
-    private double attack3cd = 5;
-    private double roundsAfterAttack3;
+    private double skill1cd = 1;
+    private double roundsAfterSkill1 = 0;
+    private double skill2cd = 2;
+    private double roundsAfterSkill2 = 0;
+    private double skill3cd = 5;
+    private double roundsAfterSkill3 = 0;
+    private double skill4cd = 3;
+    private double roundsAfterSkill4 = 0;
+    private double skill5cd = 7;
+    private double roundsAfterSkill5 = 0;
     //private double precision;
     private int characterLevel;
     private int characterExp;
@@ -171,6 +175,10 @@ public class Character {
             energyRegen = 9001;
             energyRegenMulti = 1;
             characterLevel = 9001;
+            skills.add("Strike of God");
+            skills.add("Strike of God");
+            skills.add("Strike of God");
+            skills.add("Strike of God");
             skills.add("Strike of God");
         }
     }
@@ -351,12 +359,38 @@ public class Character {
         maxEnergy = baseEnergy * maxEnergyMulti;
     }
 
+
+    public void reduceSkillcd(){
+        skill1cd--;
+        skill2cd--;
+        skill3cd--;
+        skill4cd--;
+        skill5cd--;
+        if (skill1cd < 0) {
+            skill1cd = 0;
+        }
+        if (skill2cd < 0) {
+            skill2cd = 0;
+        }
+        if (skill3cd < 0) {
+            skill3cd = 0;
+        }
+        if (skill4cd < 0) {
+            skill4cd = 0;
+        }
+        if (skill5cd < 0) {
+            skill5cd = 0;
+        }
+    }
+
+
+
     public String toString(){
 
         DecimalFormat df = new DecimalFormat("#");
         df.setRoundingMode(RoundingMode.HALF_UP);
 
-        return "Health: " + df.format(health) + "/" + df.format(maxHealth) +"\nEnergy: " + df.format(energy) +"/" + df.format(maxEnergy) + "\nAttack Cooldowns: \n" +   ": " + attack1cd + " | " +  ": " + attack2cd + " | " + ": " + attack3cd;
+        return "Health: " + df.format(health) + "/" + df.format(maxHealth) +"\nEnergy: " + df.format(energy) +"/" + df.format(maxEnergy) + "\nAttack Cooldowns: \n" + skills.get(0) + ": " + skill1cd + " | " + skills.get(1) + ": " + skill2cd + " | " + skills.get(2) + ": " + skill3cd + " | " + skills.get(3) + ": " + skill4cd + " | " + skills.get(4) + ": " + skill5cd;
     }
 
 
