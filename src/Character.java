@@ -79,7 +79,6 @@ public class Character {
             skills.add("Cleave");
             skills.add("Block");
             skills.add("Bandage");
-            skills.add("Strengthen");
             skills.add("Flurry strike");
         }
         else if (type.equals("mage")) {
@@ -104,7 +103,6 @@ public class Character {
             skills.add("Fireball");
             skills.add("Shield");
             skills.add("Heal");
-            skills.add("Empower");
             skills.add("Elemental Storm");
         }
         else if (type.equals("tank")) {
@@ -129,7 +127,6 @@ public class Character {
             skills.add("Slam");
             skills.add("Bandage");
             skills.add("Parry");
-            skills.add("Solidify");
             skills.add("tank ult");
         }
         else if (type.equals("marksman")) {
@@ -152,9 +149,8 @@ public class Character {
             critBonus = 1.33;
             skills.add("Shoot");
             skills.add("Stab");
-            skills.add("Retreat");
+            skills.add("Dodge");
             skills.add("Bandage");
-            skills.add("Take Aim");
             skills.add("Volley Shot");
         }
         else if (type.equals("test")) {
@@ -185,7 +181,7 @@ public class Character {
 
 
     //CHARACTER ATTACKS
-    public double characterAttack(String attackName) {
+    public double characterSkill(String attackName) {
         double damageDealt = 0;
         int attackSuccessful = (int) (1 + Math.random() * 100);
         int critRandomizer = (int) (Math.random() * 100);
@@ -200,6 +196,10 @@ public class Character {
         //SWORDSMAN ATTACKS
         if (type.equals("swordsman")) {
             if (hit) {
+                if (attackName.equals("bandage")) {
+                    regenHealth();
+                    damageDealt = -1;
+                }
                 //Crit attacks
                 if (crit) {
                     if (attackName.equals("slice")) {
@@ -231,6 +231,10 @@ public class Character {
             }
         }
         else if (type.equals("mage")) {
+            if (attackName.equals("heal")) {
+                regenHealth();
+                damageDealt = -1;
+            }
             if (hit) {
                 if(crit) {
                     if (attackName.equals("fireball")) {
@@ -330,6 +334,12 @@ public class Character {
         }
         return damageDealt;
     }
+
+    public void regenHealth() {
+        health += baseHealth * 0.3;
+    }
+
+
 
     public void regenEnergy() {
         double energyRegained = energyRegen * energyRegenMulti;

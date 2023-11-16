@@ -71,7 +71,10 @@ public class DungeonRunner {
                     System.out.println("Enemy Health: " + enemy.getEnemyHealth());
                     System.out.println("------");
                     System.out.println("Your stats: ");
-                    System.out.println(player);
+                    System.out.println(player + "\n\n\n");
+                    System.out.println("What skill do you want to use?(use 1,2,3,4 or 5)");
+                    String input = s.nextLine();
+
 
                 }
             }
