@@ -7,6 +7,7 @@ public class DungeonRunner {
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.HALF_UP);
 
+        String input;
         String type = "";
         String name;
         double difficultyMulti = 1;
@@ -38,44 +39,67 @@ public class DungeonRunner {
         boolean inCombat = false;
 
         while (!gameOver) {
-            dungeon.nextFloor();
-            player.reduceSkillcd();
-            player.regenEnergy();
-            System.out.println(player);
-            if (dungeon.determineNextEvent() == 1) {
-                enemy = new Enemy(difficultyMulti, dungeon.getDungeonFloor());
-                System.out.println(enemy.getEnemyName());
-                inCombat = true;
-            }
-            else if (dungeon.determineNextEvent() == 2) {
-                enemy = new Enemy(difficultyMulti, dungeon.getDungeonFloor());
-                System.out.println(enemy.getEnemyName());
-                inCombat = true;
-            }
-            else if (dungeon.determineNextEvent() == 3) {
-                System.out.println("You found a secret chest!\nYour level has been increased by 1!");
-                player.levelUp();
-                player.recalculateCharacterStats();
-            }
-            else {
-                System.out.println("ENEMY: CHEST MIMIC");
-                enemy = new Enemy(difficultyMulti, dungeon.getDungeonFloor(), "Chest Mimic");
-                inCombat = true;
-            }
-
-
-            if (inCombat) {
-                System.out.println("\n\n\n\n\n\n\n\n\n-------------------------------------------");
-                while (enemy.getEnemyHealth() > 0) {
+            System.out.println("What do you want to do(n for next level, q to view stats):");
+            input = s.nextLine();
+            if (input.toLowerCase().equals("n")) {
+                dungeon.nextFloor();
+                player.reduceSkillcd();
+                player.regenEnergy();
+                System.out.println(player);
+                if (dungeon.determineNextEvent() == 1) {
+                    enemy = new Enemy(difficultyMulti, dungeon.getDungeonFloor());
                     System.out.println(enemy.getEnemyName());
-                    System.out.println("Enemy Health: " + enemy.getEnemyHealth());
-                    System.out.println("------");
-                    System.out.println("Your stats: ");
-                    System.out.println(player + "\n\n\n");
-                    System.out.println("What skill do you want to use?(use 1,2,3,4 or 5)");
-                    String input = s.nextLine();
+                    inCombat = true;
+                }
+                else if (dungeon.determineNextEvent() == 2) {
+                    enemy = new Enemy(difficultyMulti, dungeon.getDungeonFloor());
+                    System.out.println(enemy.getEnemyName());
+                    inCombat = true;
+                }
+                else if (dungeon.determineNextEvent() == 3) {
+                    System.out.println("You found a secret chest!\nYour level has been increased by 1!");
+                    player.levelUp();
+                    player.recalculateCharacterStats();
+                }
+                else {
+                    System.out.println("ENEMY: CHEST MIMIC");
+                    enemy = new Enemy(difficultyMulti, dungeon.getDungeonFloor(), "Chest Mimic");
+                    inCombat = true;
+                }
 
 
+                if (inCombat) {
+                    System.out.println("\n\n\n\n\n\n\n\n\n-------------------------------------------");
+                    while (enemy.getEnemyHealth() > 0) {
+                        System.out.println(enemy.getEnemyName());
+                        System.out.println("Enemy Health: " + enemy.getEnemyHealth());
+                        System.out.println("------");
+                        System.out.println("Your stats: ");
+                        System.out.println(player + "\n\n\n");
+                        boolean validInputForSkill = false;
+                        while (validInputForSkill == false) {
+                            System.out.println("What skill do you want to use?(use 1,2,3,4 or 5)");
+                            input = s.nextLine().toLowerCase();
+                            if (input.equals("4")) {
+                                System.out.println("The enemy did zero damage!");
+                                validInputForSkill = true;
+                            } else if (input.equals("1") || input.equals("2") || input.equals("3") || input.equals("5")) {
+                                validInputForSkill = true;
+                                Combat fight = new Combat(player, enemy, input);
+                                double result = fight.fightResult();
+                                if (result < 0) {
+                                    System.out.println("You healed " + -result + " health!");
+                                }
+                                if (result > 0) {
+                                    System.out.println("You did " + result + " damage to " + enemy.getEnemyName());
+                                }
+                            }
+                        }
+
+
+                    }
+                    System.out.println("You have killed the enemy and cleared the floor!");
+                    inCombat = false;
                 }
             }
         }

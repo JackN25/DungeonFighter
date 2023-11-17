@@ -202,28 +202,28 @@ public class Character {
                 }
                 //Crit attacks
                 if (crit) {
-                    if (attackName.equals("slice")) {
+                    if (attackName.equals("1")) {
                         damageDealt = attack * attackMulti * critBonus;
                         energy -= 25;
                     }
-                    if (attackName.equals("cleave")) {
+                    if (attackName.equals("2")) {
                         damageDealt = attack * attackMulti * critBonus * 1.33;
                         energy -= 35;
                     }
-                    if (attackName.equals("flurry strike")) {
+                    if (attackName.equals("5")) {
                         damageDealt = attack * attackMulti * critBonus * 3;
                         energy -= 75;
                     }
                 } else{
-                    if (attackName.equals("slice")) {
+                    if (attackName.equals("1")) {
                         damageDealt = attack * attackMulti;
                         energy -= 25;
                     }
-                    if (attackName.equals("cleave")) {
+                    if (attackName.equals("2")) {
                         damageDealt = attack * attackMulti * 1.33;
                         energy -= 35;
                     }
-                    if (attackName.equals("flurry strike")) {
+                    if (attackName.equals("5")) {
                         damageDealt = attack * attackMulti * 3;
                         energy -= 75;
                     }
@@ -237,28 +237,28 @@ public class Character {
             }
             if (hit) {
                 if(crit) {
-                    if (attackName.equals("fireball")) {
+                    if (attackName.equals("1")) {
                         damageDealt = attack * attackMulti * critBonus * 1.2;
                         energy -= 30;
                     }
-                    if (attackName.equals("magic Blast")) {
+                    if (attackName.equals("2")) {
                         damageDealt = attack * attackMulti * critBonus;
                         energy -= 25;
                     }
-                    if (attackName.equals("elemental storm")) {
+                    if (attackName.equals("5")) {
                         damageDealt = attack * attackMulti * critBonus * 3;
                         energy -= 80;
                     }
                 } else {
-                    if (attackName.equals("fireball")) {
+                    if (attackName.equals("1")) {
                         damageDealt = attack * attackMulti * 1.2;
                         energy -= 30;
                     }
-                    if (attackName.equals("magic Blast")) {
+                    if (attackName.equals("2")) {
                         damageDealt = attack * attackMulti;
                         energy -= 25;
                     }
-                    if (attackName.equals("elemental storm")) {
+                    if (attackName.equals("5")) {
                         damageDealt = attack * attackMulti * 3;
                         energy -= 80;
                     }
@@ -268,28 +268,28 @@ public class Character {
         else if (type.equals("tank")) {
             if (hit) {
                 if(crit) {
-                    if (attackName.equals("smack")) {
+                    if (attackName.equals("1")) {
                         damageDealt = attack * attackMulti * critBonus;
                         energy -= 30;
                     }
-                    if (attackName.equals("slam")) {
+                    if (attackName.equals("2")) {
                         damageDealt = attack * attackMulti * critBonus * 1.5;
                         energy -= 25;
                     }
-                    if (attackName.equals("tank ult")) {
+                    if (attackName.equals("5")) {
                         damageDealt = attack * attackMulti * critBonus * 3;
                         energy -= 80;
                     }
                 } else {
-                    if (attackName.equals("smack")) {
+                    if (attackName.equals("1")) {
                         damageDealt = attack * attackMulti;
                         energy -= 30;
                     }
-                    if (attackName.equals("slam")) {
+                    if (attackName.equals("2")) {
                         damageDealt = attack * attackMulti * 1.3;
                         energy -= 35;
                     }
-                    if (attackName.equals("tank ult")) {
+                    if (attackName.equals("5")) {
                         damageDealt = attack * attackMulti * 3;
                         energy -= 80;
                     }
@@ -299,28 +299,28 @@ public class Character {
         else if (type.equals("marksman")) {
             if (hit) {
                 if(crit) {
-                    if (attackName.equals("shoot")) {
+                    if (attackName.equals("1")) {
                         damageDealt = attack * attackMulti * critBonus * 1.3;
                         energy -= 30;
                     }
-                    if (attackName.equals("stab")) {
+                    if (attackName.equals("2")) {
                         damageDealt = attack * attackMulti * critBonus;
                         energy -= 25;
                     }
-                    if (attackName.equals("volley shot")) {
+                    if (attackName.equals("5")) {
                         damageDealt = attack * attackMulti * critBonus * 3;
                         energy -= 75;
                     }
                 } else {
-                    if (attackName.equals("shoot")) {
+                    if (attackName.equals("1")) {
                         damageDealt = attack * attackMulti * 1.3;
                         energy -= 25;
                     }
-                    if (attackName.equals("stab")) {
+                    if (attackName.equals("2")) {
                         damageDealt = attack * attackMulti;
                         energy -= 20;
                     }
-                    if (attackName.equals("volley shot")) {
+                    if (attackName.equals("5")) {
                         damageDealt = attack * attackMulti * 3;
                         energy -= 75;
                     }
@@ -335,8 +335,9 @@ public class Character {
         return damageDealt;
     }
 
-    public void regenHealth() {
+    public double regenHealth() {
         health += baseHealth * 0.3;
+        return baseHealth * 0.3;
     }
 
 
@@ -450,4 +451,20 @@ public class Character {
     /*public ArrayList<String> getAccessories() {
         return accessories;
     }*/ // accessories not implemented
+
+    public double getRoundsAfterSkill1() {
+        return roundsAfterSkill1;
+    }
+    public double getRoundsAfterSkill2() {
+        return roundsAfterSkill2;
+    }
+    public double getRoundsAfterSkill3() {
+        return roundsAfterSkill3;
+    }
+    public double getRoundsAfterSkill4() {
+        return roundsAfterSkill4;
+    }
+    public double getRoundsAfterSkill5() {
+        return roundsAfterSkill5;
+    }
 }
