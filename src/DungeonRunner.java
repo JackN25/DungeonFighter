@@ -46,17 +46,18 @@ public class DungeonRunner {
                 player.reduceSkillcd();
                 player.regenEnergy();
                 System.out.println(player);
-                if (dungeon.determineNextEvent() == 1) {
+                int nextEvent = dungeon.determineNextEvent();
+                if (nextEvent == 1) {
                     enemy = new Enemy(difficultyMulti, dungeon.getDungeonFloor());
                     System.out.println(enemy.getEnemyName());
                     inCombat = true;
                 }
-                else if (dungeon.determineNextEvent() == 2) {
+                else if (nextEvent == 2) {
                     enemy = new Enemy(difficultyMulti, dungeon.getDungeonFloor());
                     System.out.println(enemy.getEnemyName());
                     inCombat = true;
                 }
-                else if (dungeon.determineNextEvent() == 3) {
+                else if (nextEvent == 3) {
                     System.out.println("You found a secret chest!\nYour level has been increased by 1!");
                     player.levelUp();
                     player.recalculateCharacterStats();
@@ -69,22 +70,22 @@ public class DungeonRunner {
 
 
                 if (inCombat) {
-                    System.out.println("\n\n\n\n\n\n\n\n\n-------------------------------------------");
                     while (enemy.getEnemyHealth() > 0) {
+                        player.regenEnergy();
+                        System.out.println("\n\n\n\n\n\n\n\n\n-------------------------------------------");
                         System.out.println(enemy.getEnemyName());
                         System.out.println("Enemy Health: " + enemy.getEnemyHealth());
                         System.out.println("------");
                         System.out.println("Your stats: ");
-                        System.out.println(player + "\n\n\n");
+                        System.out.println(player + "\n");
                         boolean validInputForSkill = false;
-                        while (validInputForSkill == false) {
+                        while (!validInputForSkill) {
                             System.out.println("What skill do you want to use?(use 1,2,3,4 or 5)");
-                            input = s.nextLine().toLowerCase();
-                            if (input.equals("4")) {
+                            input = s.nextLine();
+                            if (input.equals("3")) {
                                 System.out.println("The enemy did zero damage!");
                                 validInputForSkill = true;
-                            } else if (input.equals("1") || input.equals("2") || input.equals("3") || input.equals("5")) {
-                                validInputForSkill = true;
+                            } else if (input.equals("1") || input.equals("2") || input.equals("4") || input.equals("5")) {
                                 Combat fight = new Combat(player, enemy, input);
                                 double result = fight.fightResult();
                                 if (result < 0) {
@@ -93,12 +94,21 @@ public class DungeonRunner {
                                 if (result > 0) {
                                     System.out.println("You did " + result + " damage to " + enemy.getEnemyName());
                                 }
+                                if (result == 0) {
+                                    System.out.println("You missed your attack!");
+                                }
+                                if (result == -123456789) {
+                                    System.out.println("You don't have enough energy or the skill is still on cooldown!");
+                                }
                             }
                         }
+                        double damageTaken = enemy.enemyAttack();
+                        player.takeDamage(damageTaken);
+                        System.out.println("The enemy dealt " + damageTaken + " damage to you!");
 
 
                     }
-                    System.out.println("You have killed the enemy and cleared the floor!");
+                    System.out.println("You have killed the enemy and cleared the floor!\n\n");
                     inCombat = false;
                 }
             }

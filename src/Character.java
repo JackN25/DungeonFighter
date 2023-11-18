@@ -24,14 +24,19 @@ public class Character {
     private double critBonus;
     private double skill1cd = 1;
     private double roundsAfterSkill1 = 0;
+    private double skill1EnergyCost;
     private double skill2cd = 2;
-    private double roundsAfterSkill2 = 0;
+    private double roundsAfterSkill2 = 1;
+    private double skill2EnergyCost;
     private double skill3cd = 5;
-    private double roundsAfterSkill3 = 0;
+    private double roundsAfterSkill3 = 2;
+    private double skill3EnergyCost;
     private double skill4cd = 3;
-    private double roundsAfterSkill4 = 0;
+    private double roundsAfterSkill4 = 3;
+    private double skill4EnergyCost;
     private double skill5cd = 7;
-    private double roundsAfterSkill5 = 0;
+    private double roundsAfterSkill5 = 5;
+    private double skill5EnergyCost;
     //private double precision;
     private int characterLevel;
     private int characterExp;
@@ -42,6 +47,12 @@ public class Character {
 
 
     //CREATES THE CHARACTER WITH STARTING SKILLS AND STATS
+
+    /**
+     *
+     * @param type
+     * @param name
+     */
     public Character(String type, String name) {
 
         DecimalFormat df = new DecimalFormat("#.##");
@@ -75,6 +86,9 @@ public class Character {
             energyRegenMulti = 1.1;
             critChance = 0.33;
             critBonus = 1.5;
+            skill1EnergyCost = 25;
+            skill2EnergyCost = 35;
+            skill3EnergyCost = 0;
             skills.add("Slice");
             skills.add("Cleave");
             skills.add("Block");
@@ -181,7 +195,15 @@ public class Character {
 
 
     //CHARACTER ATTACKS
+
+    /**
+     *
+     * @param attackName
+     * @return
+     */
     public double characterSkill(String attackName) {
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.HALF_UP);
         double damageDealt = 0;
         int attackSuccessful = (int) (1 + Math.random() * 100);
         int critRandomizer = (int) (Math.random() * 100);
@@ -196,71 +218,75 @@ public class Character {
         //SWORDSMAN ATTACKS
         if (type.equals("swordsman")) {
             if (hit) {
-                if (attackName.equals("bandage")) {
-                    regenHealth();
-                    damageDealt = -1;
-                }
                 //Crit attacks
                 if (crit) {
                     if (attackName.equals("1")) {
                         damageDealt = attack * attackMulti * critBonus;
                         energy -= 25;
+                        roundsAfterSkill1 = skill1cd;
                     }
                     if (attackName.equals("2")) {
                         damageDealt = attack * attackMulti * critBonus * 1.33;
                         energy -= 35;
+                        roundsAfterSkill2 = skill2cd;
                     }
                     if (attackName.equals("5")) {
                         damageDealt = attack * attackMulti * critBonus * 3;
                         energy -= 75;
+                        roundsAfterSkill5 = skill5cd;
                     }
                 } else{
                     if (attackName.equals("1")) {
                         damageDealt = attack * attackMulti;
                         energy -= 25;
+                        roundsAfterSkill1 = skill1cd;
                     }
                     if (attackName.equals("2")) {
                         damageDealt = attack * attackMulti * 1.33;
                         energy -= 35;
+                        roundsAfterSkill2 = skill2cd;
                     }
                     if (attackName.equals("5")) {
                         damageDealt = attack * attackMulti * 3;
                         energy -= 75;
+                        roundsAfterSkill5 = skill5cd;
                     }
                 }
             }
         }
         else if (type.equals("mage")) {
-            if (attackName.equals("heal")) {
-                regenHealth();
-                damageDealt = -1;
-            }
             if (hit) {
                 if(crit) {
                     if (attackName.equals("1")) {
                         damageDealt = attack * attackMulti * critBonus * 1.2;
                         energy -= 30;
+                        roundsAfterSkill1 = skill1cd;
                     }
                     if (attackName.equals("2")) {
                         damageDealt = attack * attackMulti * critBonus;
                         energy -= 25;
+                        roundsAfterSkill2 = skill2cd;
                     }
                     if (attackName.equals("5")) {
                         damageDealt = attack * attackMulti * critBonus * 3;
                         energy -= 80;
+                        roundsAfterSkill5 = skill5cd;
                     }
                 } else {
                     if (attackName.equals("1")) {
                         damageDealt = attack * attackMulti * 1.2;
                         energy -= 30;
+                        roundsAfterSkill1 = skill1cd;
                     }
                     if (attackName.equals("2")) {
                         damageDealt = attack * attackMulti;
                         energy -= 25;
+                        roundsAfterSkill2 = skill2cd;
                     }
                     if (attackName.equals("5")) {
                         damageDealt = attack * attackMulti * 3;
                         energy -= 80;
+                        roundsAfterSkill5 = skill5cd;
                     }
                 }
             }
@@ -271,27 +297,33 @@ public class Character {
                     if (attackName.equals("1")) {
                         damageDealt = attack * attackMulti * critBonus;
                         energy -= 30;
+                        roundsAfterSkill1 = skill1cd;
                     }
                     if (attackName.equals("2")) {
                         damageDealt = attack * attackMulti * critBonus * 1.5;
                         energy -= 25;
+                        roundsAfterSkill2 = skill2cd;
                     }
                     if (attackName.equals("5")) {
                         damageDealt = attack * attackMulti * critBonus * 3;
                         energy -= 80;
+                        roundsAfterSkill5 = skill5cd;
                     }
                 } else {
                     if (attackName.equals("1")) {
                         damageDealt = attack * attackMulti;
                         energy -= 30;
+                        roundsAfterSkill1 = skill1cd;
                     }
                     if (attackName.equals("2")) {
                         damageDealt = attack * attackMulti * 1.3;
                         energy -= 35;
+                        roundsAfterSkill2 = skill2cd;
                     }
                     if (attackName.equals("5")) {
                         damageDealt = attack * attackMulti * 3;
                         energy -= 80;
+                        roundsAfterSkill5 = skill5cd;
                     }
                 }
             }
@@ -302,27 +334,33 @@ public class Character {
                     if (attackName.equals("1")) {
                         damageDealt = attack * attackMulti * critBonus * 1.3;
                         energy -= 30;
+                        roundsAfterSkill1 = skill1cd;
                     }
                     if (attackName.equals("2")) {
                         damageDealt = attack * attackMulti * critBonus;
                         energy -= 25;
+                        roundsAfterSkill2 = skill2cd;
                     }
                     if (attackName.equals("5")) {
                         damageDealt = attack * attackMulti * critBonus * 3;
                         energy -= 75;
+                        roundsAfterSkill5 = skill5cd;
                     }
                 } else {
                     if (attackName.equals("1")) {
                         damageDealt = attack * attackMulti * 1.3;
                         energy -= 25;
+                        roundsAfterSkill1 = skill1cd;
                     }
                     if (attackName.equals("2")) {
                         damageDealt = attack * attackMulti;
                         energy -= 20;
+                        roundsAfterSkill2 = skill2cd;
                     }
                     if (attackName.equals("5")) {
                         damageDealt = attack * attackMulti * 3;
                         energy -= 75;
+                        roundsAfterSkill5 = skill5cd;
                     }
                 }
             }
@@ -332,16 +370,23 @@ public class Character {
                 damageDealt = attack * attackMulti * critBonus;
             }
         }
+        damageDealt = Double.parseDouble(df.format(damageDealt));
         return damageDealt;
     }
 
+    /**
+     *
+     * @return
+     */
     public double regenHealth() {
         health += baseHealth * 0.3;
         return baseHealth * 0.3;
     }
 
 
-
+    /**
+     *
+     */
     public void regenEnergy() {
         double energyRegained = energyRegen * energyRegenMulti;
         if (energyRegained + energy > maxEnergy) {
@@ -351,6 +396,9 @@ public class Character {
         }
     }
 
+    /**
+     *
+     */
     public void levelUp() {
         characterLevel ++;
         attackMulti += 0.15;
@@ -361,16 +409,24 @@ public class Character {
             maxEnergy += 10;
         }
         energyRegenMulti += 0.02;
+        health = maxHealth;
     }
 
+    /**
+     *
+     */
     public void recalculateCharacterStats() {
-        attack = baseAttack * attackMulti;
-        maxHealth = baseHealth * maxHealthMulti;
-        energyRegen = energyRegen * energyRegenMulti;
-        maxEnergy = baseEnergy * maxEnergyMulti;
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        attack = Double.parseDouble(df.format(baseAttack + (baseAttack * attackMulti)));
+        maxHealth = Double.parseDouble(df.format(baseHealth + (baseHealth * maxHealthMulti)));
+        energyRegen = Double.parseDouble(df.format(energyRegen + (energyRegen * energyRegenMulti)));
+        maxEnergy = Double.parseDouble(df.format(baseEnergy + (baseEnergy * maxEnergyMulti)));
     }
 
-
+    /**
+     *
+     */
     public void reduceSkillcd(){
         skill1cd--;
         skill2cd--;
@@ -394,8 +450,18 @@ public class Character {
         }
     }
 
+    /**
+     *
+     * @param d
+     */
+    public void takeDamage(double d){
+        health = health - d;
+    }
 
-
+    /**
+     *
+     * @return
+     */
     public String toString(){
 
         DecimalFormat df = new DecimalFormat("#");

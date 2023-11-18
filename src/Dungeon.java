@@ -3,7 +3,7 @@ public class Dungeon {
     private int whatHappensNext;
     private int nextEvent;
     public Dungeon(){
-        dungeonFloor = 1;
+        dungeonFloor = 0;
     }
 
     public void nextFloor(){
