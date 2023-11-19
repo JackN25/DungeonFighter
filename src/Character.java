@@ -88,7 +88,8 @@ public class Character {
             critBonus = 1.5;
             skill1EnergyCost = 25;
             skill2EnergyCost = 35;
-            skill3EnergyCost = 0;
+            skill4EnergyCost = 20;
+            skill5EnergyCost = 75;
             skills.add("Slice");
             skills.add("Cleave");
             skills.add("Block");
@@ -113,6 +114,10 @@ public class Character {
             energyRegenMulti = 1.3;
             critChance = 0.33;
             critBonus = 1.5;
+            skill1EnergyCost = 25;
+            skill2EnergyCost = 30;
+            skill4EnergyCost = 30;
+            skill5EnergyCost = 80;
             skills.add("Magic Blast");
             skills.add("Fireball");
             skills.add("Shield");
@@ -137,11 +142,15 @@ public class Character {
             energyRegenMulti = 1.1;
             critChance = 0.15;
             critBonus = 1.75;
+            skill1EnergyCost = 30;
+            skill2EnergyCost = 35;
+            skill4EnergyCost = 10;
+            skill5EnergyCost = 80;
             skills.add("Smack");
             skills.add("Slam");
+            skills.add("Block");
             skills.add("Bandage");
-            skills.add("Parry");
-            skills.add("tank ult");
+            skills.add("Rampage");
         }
         else if (type.equals("marksman")) {
             attack = 10;
@@ -161,6 +170,10 @@ public class Character {
             energyRegenMulti = 1.1;
             critChance = 0.45;
             critBonus = 1.33;
+            skill1EnergyCost = 30;
+            skill2EnergyCost = 35;
+            skill4EnergyCost = 20;
+            skill5EnergyCost = 75;
             skills.add("Shoot");
             skills.add("Stab");
             skills.add("Dodge");
@@ -185,6 +198,11 @@ public class Character {
             energyRegen = 9001;
             energyRegenMulti = 1;
             characterLevel = 9001;
+            skill1EnergyCost = 0;
+            skill2EnergyCost = 0;
+            skill3EnergyCost = 0;
+            skill4EnergyCost = 0;
+            skill5EnergyCost = 0;
             skills.add("Strike of God");
             skills.add("Strike of God");
             skills.add("Strike of God");
@@ -258,13 +276,13 @@ public class Character {
             if (hit) {
                 if(crit) {
                     if (attackName.equals("1")) {
-                        damageDealt = attack * attackMulti * critBonus * 1.2;
-                        energy -= 30;
+                        damageDealt = attack * attackMulti * critBonus;
+                        energy -= 25;
                         roundsAfterSkill1 = skill1cd;
                     }
                     if (attackName.equals("2")) {
-                        damageDealt = attack * attackMulti * critBonus;
-                        energy -= 25;
+                        damageDealt = attack * attackMulti * critBonus * 1.2;
+                        energy -= 30;
                         roundsAfterSkill2 = skill2cd;
                     }
                     if (attackName.equals("5")) {
@@ -274,13 +292,13 @@ public class Character {
                     }
                 } else {
                     if (attackName.equals("1")) {
-                        damageDealt = attack * attackMulti * 1.2;
-                        energy -= 30;
+                        damageDealt = attack * attackMulti;
+                        energy -= 25;
                         roundsAfterSkill1 = skill1cd;
                     }
                     if (attackName.equals("2")) {
-                        damageDealt = attack * attackMulti;
-                        energy -= 25;
+                        damageDealt = attack * attackMulti * 1.2;
+                        energy -= 30;
                         roundsAfterSkill2 = skill2cd;
                     }
                     if (attackName.equals("5")) {
@@ -301,7 +319,7 @@ public class Character {
                     }
                     if (attackName.equals("2")) {
                         damageDealt = attack * attackMulti * critBonus * 1.5;
-                        energy -= 25;
+                        energy -= 35;
                         roundsAfterSkill2 = skill2cd;
                     }
                     if (attackName.equals("5")) {
@@ -410,6 +428,9 @@ public class Character {
         }
         energyRegenMulti += 0.02;
         health = maxHealth;
+        if (maxEnergy >= baseEnergy + baseEnergy * 0.5) {
+            maxEnergy  = baseEnergy + baseEnergy * 0.5;
+        }
     }
 
     /**
@@ -428,25 +449,25 @@ public class Character {
      *
      */
     public void reduceSkillcd(){
-        skill1cd--;
-        skill2cd--;
-        skill3cd--;
-        skill4cd--;
-        skill5cd--;
-        if (skill1cd < 0) {
-            skill1cd = 0;
+        roundsAfterSkill1--;
+        roundsAfterSkill2--;
+        roundsAfterSkill3--;
+        roundsAfterSkill4--;
+        roundsAfterSkill5--;
+        if (roundsAfterSkill1 < 0) {
+            roundsAfterSkill1 = 0;
         }
-        if (skill2cd < 0) {
-            skill2cd = 0;
+        if (roundsAfterSkill2 < 0) {
+            roundsAfterSkill2 = 0;
         }
-        if (skill3cd < 0) {
-            skill3cd = 0;
+        if (roundsAfterSkill3 < 0) {
+            roundsAfterSkill3 = 0;
         }
-        if (skill4cd < 0) {
-            skill4cd = 0;
+        if (roundsAfterSkill4 < 0) {
+            roundsAfterSkill4 = 0;
         }
-        if (skill5cd < 0) {
-            skill5cd = 0;
+        if (roundsAfterSkill5 < 0) {
+            roundsAfterSkill5 = 0;
         }
     }
 
@@ -467,7 +488,7 @@ public class Character {
         DecimalFormat df = new DecimalFormat("#");
         df.setRoundingMode(RoundingMode.HALF_UP);
 
-        return "Health: " + df.format(health) + "/" + df.format(maxHealth) +"\nEnergy: " + df.format(energy) +"/" + df.format(maxEnergy) + "\nAttack Cooldowns: \n" + skills.get(0) + ": " + skill1cd + " | " + skills.get(1) + ": " + skill2cd + " | " + skills.get(2) + ": " + skill3cd + " | " + skills.get(3) + ": " + skill4cd + " | " + skills.get(4) + ": " + skill5cd;
+        return "Health: " + df.format(health) + "/" + df.format(maxHealth) +"\nEnergy: " + df.format(energy) +"/" + df.format(maxEnergy) + "\nAttack Cooldowns: \n" + skills.get(0) + ": " + roundsAfterSkill1 + " | " + skills.get(1) + ": " + roundsAfterSkill2 + " | " + skills.get(2) + ": " + roundsAfterSkill3 + " | " + skills.get(3) + ": " + roundsAfterSkill4 + " | " + skills.get(4) + ": " + roundsAfterSkill5;
     }
 
 
@@ -532,5 +553,26 @@ public class Character {
     }
     public double getRoundsAfterSkill5() {
         return roundsAfterSkill5;
+    }
+    public double getBaseHealth() {
+        return baseHealth;
+    }
+    public double getBaseAttack(){
+        return baseAttack;
+    }
+    public double getBaseEnergy(){
+        return baseEnergy;
+    }
+    public double getSkill1EnergyCost() {
+        return skill1EnergyCost;
+    }
+    public double getSkill2EnergyCost() {
+        return skill2EnergyCost;
+    }
+    public double getSkill4EnergyCost() {
+        return skill4EnergyCost;
+    }
+    public double getSkill5EnergyCost(){
+        return skill5EnergyCost;
     }
 }

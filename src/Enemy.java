@@ -39,12 +39,12 @@ public class Enemy {
                 enemyAttack = Double.parseDouble(df.format(10 * difficultyMulti * (dungeonFloor * 0.3)));
             } else if (enemyChooser == 2) {
                 enemyName = "Slime";
-                enemyHealth = 35 * difficultyMulti * (dungeonFloor / 5.0);
-                enemyAttack = 7 * difficultyMulti * (1 + dungeonFloor / 5.0 * 0.3);
+                enemyHealth = Double.parseDouble(df.format(35 * difficultyMulti * (dungeonFloor / 5.0)));
+                enemyAttack = Double.parseDouble(df.format(7 * difficultyMulti * (1 + dungeonFloor / 5.0 * 0.3)));
             } else {
                 enemyName = "Golem";
-                enemyHealth = 40 * difficultyMulti * (dungeonFloor / 5.0);
-                enemyAttack = 5 * difficultyMulti * (1 + dungeonFloor / 5.0 * 0.3);
+                enemyHealth = Double.parseDouble(df.format(40 * difficultyMulti * (dungeonFloor / 5.0)));
+                enemyAttack = Double.parseDouble(df.format(5 * difficultyMulti * (1 + dungeonFloor / 5.0 * 0.3)));
             }
         }
     }

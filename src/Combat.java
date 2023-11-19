@@ -11,7 +11,7 @@ public class Combat {
     public double fightResult() {
         double result = 0;
         if (skill.equals("1")) {
-            if (player.getRoundsAfterSkill1() == 0){
+            if (player.getRoundsAfterSkill1() == 0 && player.getEnergy() >= player.getSkill1EnergyCost()){
                 result = player.characterSkill(skill);
                 enemy.updateEnemyHealth(result);
             }else {
@@ -19,7 +19,7 @@ public class Combat {
             }
         }
         if (skill.equals("2")) {
-            if (player.getRoundsAfterSkill2() == 0) {
+            if (player.getRoundsAfterSkill2() == 0 && player.getEnergy() >= player.getSkill2EnergyCost()) {
                 result = player.characterSkill(skill);
                 enemy.updateEnemyHealth(result);
             }else {
@@ -27,14 +27,14 @@ public class Combat {
             }
         }
         if (skill.equals("4")) {
-            if (player.getRoundsAfterSkill3() == 0) {
+            if (player.getRoundsAfterSkill3() == 0 && player.getEnergy() >= player.getSkill4EnergyCost()) {
                 result = -player.regenHealth();
             }else {
                 result = -123456789;
             }
         }
         if (skill.equals("5")) {
-            if (player.getRoundsAfterSkill5() == 0) {
+            if (player.getRoundsAfterSkill5() == 0 && player.getEnergy() >= player.getSkill5EnergyCost()) {
                 result = player.characterSkill(skill);
                 enemy.updateEnemyHealth(result);
             }else {

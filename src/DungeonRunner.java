@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.text.DecimalFormat;
 import java.math.RoundingMode;
 public class DungeonRunner {
+
     public static void main(String[] args) {
 
         DecimalFormat df = new DecimalFormat("#.##");
@@ -45,7 +46,6 @@ public class DungeonRunner {
                 dungeon.nextFloor();
                 player.reduceSkillcd();
                 player.regenEnergy();
-                System.out.println(player);
                 int nextEvent = dungeon.determineNextEvent();
                 if (nextEvent == 1) {
                     enemy = new Enemy(difficultyMulti, dungeon.getDungeonFloor());
@@ -54,7 +54,6 @@ public class DungeonRunner {
                 }
                 else if (nextEvent == 2) {
                     enemy = new Enemy(difficultyMulti, dungeon.getDungeonFloor());
-                    System.out.println(enemy.getEnemyName());
                     inCombat = true;
                 }
                 else if (nextEvent == 3) {
@@ -63,7 +62,6 @@ public class DungeonRunner {
                     player.recalculateCharacterStats();
                 }
                 else {
-                    System.out.println("ENEMY: CHEST MIMIC");
                     enemy = new Enemy(difficultyMulti, dungeon.getDungeonFloor(), "Chest Mimic");
                     inCombat = true;
                 }
@@ -72,7 +70,7 @@ public class DungeonRunner {
                 if (inCombat) {
                     while (enemy.getEnemyHealth() > 0) {
                         player.regenEnergy();
-                        System.out.println("\n\n\n\n\n\n\n\n\n-------------------------------------------");
+                        System.out.println("\n\n\n-------------------------------------------");
                         System.out.println(enemy.getEnemyName());
                         System.out.println("Enemy Health: " + enemy.getEnemyHealth());
                         System.out.println("------");
@@ -82,35 +80,40 @@ public class DungeonRunner {
                         while (!validInputForSkill) {
                             System.out.println("What skill do you want to use?(use 1,2,3,4 or 5)");
                             input = s.nextLine();
-                            if (input.equals("3")) {
+                            if (input.equals("3") && player.getRoundsAfterSkill3() == 0 && player.getEnergy() >= 20) {
                                 System.out.println("The enemy did zero damage!");
                                 validInputForSkill = true;
                             } else if (input.equals("1") || input.equals("2") || input.equals("4") || input.equals("5")) {
                                 Combat fight = new Combat(player, enemy, input);
                                 double result = fight.fightResult();
-                                if (result < 0) {
+                                if (result < 0 && result != -123456789) {
                                     System.out.println("You healed " + -result + " health!");
+                                    validInputForSkill = true;
                                 }
                                 if (result > 0) {
                                     System.out.println("You did " + result + " damage to " + enemy.getEnemyName());
+                                    validInputForSkill = true;
                                 }
                                 if (result == 0) {
                                     System.out.println("You missed your attack!");
+                                    validInputForSkill = true;
                                 }
                                 if (result == -123456789) {
                                     System.out.println("You don't have enough energy or the skill is still on cooldown!");
                                 }
+                                double damageTaken = enemy.enemyAttack();
+                                player.takeDamage(damageTaken);
+                                System.out.println("The enemy dealt " + damageTaken + " damage to you!");
+                            } else {
+                                System.out.println("You don't have enough energy or the skill is still on cooldown!");
                             }
                         }
-                        double damageTaken = enemy.enemyAttack();
-                        player.takeDamage(damageTaken);
-                        System.out.println("The enemy dealt " + damageTaken + " damage to you!");
-
-
                     }
                     System.out.println("You have killed the enemy and cleared the floor!\n\n");
                     inCombat = false;
                 }
+            } else if (input.equals("q")) {
+                System.out.println(player);
             }
         }
     }
