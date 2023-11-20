@@ -57,7 +57,7 @@ public class DungeonRunner {
                     inCombat = true;
                 }
                 else if (nextEvent == 3) {
-                    System.out.println("You found a secret chest!\nYour level has been increased by 1!");
+                    System.out.println("You found a secret chest!\nYour stats have been increased!");
                     player.levelUp();
                     player.recalculateCharacterStats();
                 }
