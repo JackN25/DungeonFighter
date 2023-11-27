@@ -2,13 +2,24 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 public class Enemy {
+    /**
+     * An enemy object is something that the user has to control their character to fight to progress in the game
+     * @param enemyHealth represents the enemy's hp
+     * @param enemyAttack represents the enemy's attack power
+     * @param enemyName represents the name of the enemy
+     */
     private double difficultyMulti;
     private int dungeonFloor;
     private double enemyHealth;
     private double enemyAttack;
     private String enemyName;
 
-
+    /**
+     * Constructor for the Enemy class
+     * Creates an enemy with attributes based on the dungeon floor and difficulty multipliers
+     * @param difficultyMulti is the multiplier for the enemy health and attack to make the game harder.
+     * @param dungeonFloor represents what floor the player is on
+     */
     public Enemy(double difficultyMulti, int dungeonFloor) {
 
         DecimalFormat df = new DecimalFormat("#.##");
@@ -49,7 +60,12 @@ public class Enemy {
         }
     }
 
-
+    /**
+     * Creates a special enemy (chest mimic) with attributes based on dungeon floor and difficulty multipliers
+     * @param difficultyMulti is the multiplier for the enemy health and attack to make the game harder.
+     * @param dungeonFloor represents what floor the player is on
+     * @param name represents the name of the enemy which in this case is always Chest mimic
+     */
     public Enemy(double difficultyMulti, int dungeonFloor, String name) {
         this.difficultyMulti = difficultyMulti;
         this.dungeonFloor = dungeonFloor;
@@ -58,6 +74,10 @@ public class Enemy {
         enemyAttack = 10 * difficultyMulti * (dungeonFloor * 0.3);
     }
 
+    /**
+     * Calculates the amount of damage the enemy will deal towards the character
+     * @return the damage the enemy will do
+     */
     public double enemyAttack() {
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.HALF_UP);
@@ -76,6 +96,10 @@ public class Enemy {
         return Double.parseDouble(df.format(damageDealt));
     }
 
+    /**
+     * Subtracts enemy health based on how much damage taken
+     * @param damageTaken the amount of damage the enemy will take
+     */
     public void updateEnemyHealth(double damageTaken){
         enemyHealth = enemyHealth - damageTaken;
     }

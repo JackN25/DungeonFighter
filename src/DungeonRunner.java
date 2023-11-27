@@ -5,6 +5,11 @@ public class DungeonRunner {
 
     public static void main(String[] args) {
 
+        /**
+         * DungeonRunner.java is the main runner class for the program
+         * Will handle user inputs and print statements
+         */
+
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.HALF_UP);
 
@@ -81,6 +86,7 @@ public class DungeonRunner {
                             System.out.println("What skill do you want to use?(use 1,2,3,4 or 5)");
                             input = s.nextLine();
                             if (input.equals("3") && player.getRoundsAfterSkill3() == 0 && player.getEnergy() >= 20) {
+                                player.skill3Stats();
                                 System.out.println("The enemy did zero damage!");
                                 validInputForSkill = true;
                             } else if (input.equals("1") || input.equals("2") || input.equals("4") || input.equals("5")) {

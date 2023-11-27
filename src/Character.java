@@ -3,6 +3,11 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Character {
+    /**
+     * A character that the player will control in the game.
+     * Has various attributes relating to the character
+     *
+     */
     private String type;
     private String name;
     private double baseHealth;
@@ -30,7 +35,6 @@ public class Character {
     private double skill2EnergyCost;
     private double skill3cd = 5;
     private double roundsAfterSkill3 = 2;
-    private double skill3EnergyCost;
     private double skill4cd = 3;
     private double roundsAfterSkill4 = 3;
     private double skill4EnergyCost;
@@ -49,9 +53,10 @@ public class Character {
     //CREATES THE CHARACTER WITH STARTING SKILLS AND STATS
 
     /**
-     *
-     * @param type
-     * @param name
+     *Constructor for a character item
+     * @param type is the type of character that the player will be playing as
+     * @param name is the name that the player gives to the character
+     * Uses setAttributes() to set all player stats based on what type of character they chose
      */
     public Character(String type, String name) {
 
@@ -60,14 +65,35 @@ public class Character {
 
         this.name = name;
         this.type = type;
-        characterLevel = 0;
-        characterExpUntilNextLevel = 100;
         setAttributes();
     }
 
 
     //Attribute Initialization
     public void setAttributes(){
+        /**
+         * @param attack represents the character's attack power currently
+         * @param baseAttack represents the character's base attack before multipliers
+         * @param attackMulti represents the multiplier for the character's attack
+         * @param maxHealth represents the maximum amount of health the character can have at once
+         * @param baseHealth represents the base MAX health the character has(no multipliers applied)
+         * @param health represents the character's current health
+         * @param maxHealthMulti represents the multiplier for the character's maximum health
+         * @param maxEnergy represents the maximum amount of energy the character can have at once
+         * @param energy represents the amount of energy the character currently has
+         * @param baseEnergy represents the base MAX energy the character has without multipliers
+         * @param maxEnergyMulti represents the multiplier for maxEnergy
+         * @param energyRegen represents the amount of energy the character regenerates every round
+         * @param energyRegenMulti represents the multiplier for energyRegen
+         * @param critChance represent the chance that the character can score a critical hit (increased damage)
+         * @param critBonus represents how much times more damage a critical hit does
+         * @param skill1EnergyCost represents the amount of energy needed to cast skill 1
+         * @param skill2EnergyCost represents the amount of energy needed to cast skill 2
+         * @param skill3EnergyCost represents the amount of energy needed to cast skill 3
+         * @param skill4EnergyCost represents the amount of energy needed to cast skill 4
+         * @param skill5EnergyCost represents the amount of energy needed to cast skill 5
+         *
+         */
         if (type.equals("swordsman")) {
             attack = 11;
             baseAttack = 11;
@@ -200,7 +226,6 @@ public class Character {
             characterLevel = 9001;
             skill1EnergyCost = 0;
             skill2EnergyCost = 0;
-            skill3EnergyCost = 0;
             skill4EnergyCost = 0;
             skill5EnergyCost = 0;
             skills.add("Strike of God");
@@ -216,8 +241,8 @@ public class Character {
 
     /**
      *
-     * @param attackName
-     * @return
+     * @param attackName is the input that the user enetered to determine what attack the character uses
+     * @return damageDealt which is the amount of damage the character did with the attack
      */
     public double characterSkill(String attackName) {
         DecimalFormat df = new DecimalFormat("#.##");
@@ -393,17 +418,20 @@ public class Character {
     }
 
     /**
-     *
-     * @return
+     *Regenerates the character's health
+     * @return the amount of health regenerated
      */
     public double regenHealth() {
+        energy -= skill4EnergyCost;
+        roundsAfterSkill4 = skill4cd;
         health += baseHealth * 0.3;
         return baseHealth * 0.3;
     }
 
 
     /**
-     *
+     *Regenerates the character's energy
+     * Sets energy to maxEnergy if it is greater than maxEnergy
      */
     public void regenEnergy() {
         double energyRegained = energyRegen * energyRegenMulti;
@@ -415,7 +443,7 @@ public class Character {
     }
 
     /**
-     *
+     *Increases all character attributes by a little
      */
     public void levelUp() {
         characterLevel ++;
@@ -434,7 +462,7 @@ public class Character {
     }
 
     /**
-     *
+     *Recalculates character attributes with multipliers and base attributes
      */
     public void recalculateCharacterStats() {
         DecimalFormat df = new DecimalFormat("#.##");
@@ -446,7 +474,8 @@ public class Character {
     }
 
     /**
-     *
+     *Reduces the cool-down for each skill
+     * Sets the cool-down to 0 if it goes below 0
      */
     public void reduceSkillcd(){
         roundsAfterSkill1--;
@@ -472,17 +501,23 @@ public class Character {
     }
 
     /**
-     *
-     * @param d
+     * Subtracts damage taken from character health
+     * @param d represents the amount of damage that the character takes
      */
     public void takeDamage(double d){
         health = health - d;
     }
 
     /**
-     *
-     * @return
+     *Prints out character stats rounded
+     * @return formatted character stats
      */
+
+
+    public void skill3Stats(){
+        energy -= 20;
+        roundsAfterSkill3 = skill3cd;
+    }
     public String toString(){
 
         DecimalFormat df = new DecimalFormat("#");
@@ -490,7 +525,6 @@ public class Character {
 
         return "Health: " + df.format(health) + "/" + df.format(maxHealth) +"\nEnergy: " + df.format(energy) +"/" + df.format(maxEnergy) + "\nAttack Cooldowns: \n" + skills.get(0) + ": " + roundsAfterSkill1 + " | " + skills.get(1) + ": " + roundsAfterSkill2 + " | " + skills.get(2) + ": " + roundsAfterSkill3 + " | " + skills.get(3) + ": " + roundsAfterSkill4 + " | " + skills.get(4) + ": " + roundsAfterSkill5;
     }
-
 
 
 
