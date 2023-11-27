@@ -240,10 +240,11 @@ public class Character {
     //CHARACTER ATTACKS
 
     /**
-     *
-     * @param attackName is the input that the user enetered to determine what attack the character uses
+     * Determines how much damage the character does based on critical hits and multipliers and takes away energy
+     * @param attackName is the input that the user entered to determine what attack the character uses
      * @return damageDealt which is the amount of damage the character did with the attack
      */
+
     public double characterSkill(String attackName) {
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.HALF_UP);
